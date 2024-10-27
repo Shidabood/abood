@@ -3,7 +3,7 @@ import json
 from login import emailvalid, passwordvalid, phonenum, login
 
 
-
+print("Welcome")
 
 email = emailvalid()
 password = passwordvalid()
