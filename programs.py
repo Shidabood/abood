@@ -59,9 +59,13 @@ class tictactoe():
     def __init__(self):
         self.board = [[" " for _ in range(3)] for _ in range(3)]
         self.player = random.choice(["X","O"])
+        self.you_score = 0
+        self.ai_score = 0
 
 
     def print_board(self):
+        print("\n" * 5)
+        print(f' you = {self.you_score}     AI = {self.ai_score}')
         print("_" * 9)
         for row in self.board:
             print(" | ".join(row))
@@ -69,18 +73,30 @@ class tictactoe():
 
     def player_move(self):
         while True:
-            try:
-                row = int(input("Choose a row (0, 1, 2)"))
-                col = int(input("Choose a column (0, 1, 2)"))
-                if self.board[row][col] == " ":
-                    self.board[row][col] = self.player
-                    break
-                elif self.board[row][col] != " ":
-                    print("Position already taken!")
-            except ValueError:
-                print("Please pick a number between 0-2")
-            except IndexError:
-                print("dont pick a number thats not 0-2")
+            if self.player == "O":
+                while True:
+
+                    x = int(random.choice(["0","1","2"]))
+                    y = int(random.choice(["0","1","2"]))
+                    if self.board[x][y] == " ":
+                        self.board[x][y] = self.player
+                        break
+                break
+            else:
+
+
+                try:
+                    row = (input("Choose a row (0, 1, 2)"))
+                    col = (input("Choose a column (0, 1, 2)"))
+                    if self.board[row][col] == " ":
+                        self.board[row][col] = self.player
+                        break
+                    elif self.board[row][col] != " ":
+                        print("Position already taken!")
+                except ValueError:
+                    print("Please pick a number between 0-2")
+                except IndexError:
+                    print("dont pick a number thats not 0-2")
 
 
     def switch_player(self):
@@ -115,13 +131,31 @@ class tictactoe():
             if self.check_winner():
                 self.print_board()
                 print(f'and the winner is {self.player}!')
-                break
+                if self.player == "X":
+                    self.you_score += 1
+                else:
+                    self.ai_score += 1
+                try:
+                    inp = input("Do you want to play again? (y/n): ").lower()
+                    if inp == "y":
+                        self.board = [[" " for _ in range(3)]for _ in range(3)]
+                    else:
+                        break
+                except ValueError:
+                    print("Please type a either y or n")
             elif self.check_tie():
                 self.print_board()
                 print("Its a tie")
-                break
+                try:
+                    inp = input("Do you want to play again? (y/n): ").lower()
+                    if inp == "y":
+                        self.board = [[" " for _ in range(3)]for _ in range(3)]
+                    else:
+                        print("Thanks for playing!")
+                        break
+                except ValueError:
+                    print("Please type either y or n")
             self.switch_player()
 
 
 game = tictactoe()
-game.play_game()
