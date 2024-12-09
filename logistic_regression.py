@@ -21,7 +21,7 @@ df = pd.concat([df, department_dummies, salary_dummies], axis="columns")
 # Then we show the means of the features for each possible outcome (left or remained),
 # which would help us visualize and pick the important features
 
-print(df.groupby('left').mean())
+df.groupby('left').mean()
 
 # We then make a substitue dataframe with the important features, along with the outcome column
 
